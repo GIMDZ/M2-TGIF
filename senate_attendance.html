@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- head -->
+
+<head>
+    <meta charset="utf-8">
+    <title>TGIF| Senate Attendance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./img/favicon.png" />
+</head>
+
+<!-- body -->
+
+<body>
+    <div class="container mt-4">
+
+        <!-- Header -->
+
+        <div class="row">
+            <div class="col-12 col-md-4"><a href="index.html"><img src="./media/WH.jpg" class="img-fluid"
+                        alt="Logo"></a>
+            </div>
+            <div class="d-none d-md-block col-md-8 text-right"><i class="fas fa-envelope"></i> <a
+                    href="emailto:info@tgif.com">info@tgif</a></div>
+        </div>
+
+        <!-- NavBar -->
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top border rounded">
+
+            <!-- Links -->
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+
+                <!-- Dropdown -->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Congress 113
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="house.html">House</a>
+                        <a class="dropdown-item" href="senate.html">Senate</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Attendance
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="house_attendance.html">House</a>
+                        <a class="dropdown-item" href="senate_attendance.html">Senate</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Party Loyalty
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="house_loyalty.html">House</a>
+                        <a class="dropdown-item" href="senate_loyalty.html">Senate</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <!--Tabla At Glance-->
+
+        <div class="container" id="app">
+            <!--comienzo del container con vue -->
+            <div class="row mt-3 px-1">
+
+                <div class="col-sm-6">
+                    <!--Espacio asignado al texto -->
+                    <h2>Attendance</h2>
+                    <p class="text-justify">The Constitution specifies that a majority of members constitutes a quorum
+                        to do business in each house. Representatives and senators rarely force the presence of a quorum
+                        by demanding quorum calls; thus, in most cases, debates continue even if a majority is not
+                        present.
+                    </p>
+
+                    <p class="text-justify">The Senate uses roll-call votes; a clerk calls out the names of all the
+                        senators, each senator stating "aye" or "no" when his or her name is announced. The House
+                        reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives
+                        takes quite some time; normally, members vote by electronic device. In the case of a tie,
+                        the motion in question fails. In the Senate, the Vice President may (if present) cast the
+                        tiebreaking vote.
+                    </p>
+                </div>
+
+                <div class="col-sm-6">
+                    <!--Espacio asignado a la tabla -->
+                    <div class="container">
+                        <div class="row mt-2">
+                            <div class="table-responsive">
+                                <h3>Senate at a glance </h3>
+                                <table class="table table-hover table-striped text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Party</th>
+                                            <th>N° of Reps</th>
+                                            <th>% Voted with Party</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-justify">Democrats</td>
+                                            <td>{{statistics.number_of_democrats}}</td>
+                                            <td>{{statistics.democrats_average_votes_with_party}}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-justify">Republicans</td>
+                                            <td>{{statistics.number_of_republicans}}</td>
+                                            <td>{{statistics.republicans_average_votes_with_party}}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-justify">Independents</td>
+                                            <td>{{statistics.number_of_independents}}</td>
+                                            <td>{{statistics.independents_average_votes_with_party}}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>{{statistics.total}}</td>
+                                            <td>{{statistics.total_average}}%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Tabla para senate attendance  -->
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3>Least Engaged (Bottom 10% Attendance)</h3>
+                        <table class="table table-hover table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Number of Missed Votes</th>
+                                    <th>% Missed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for='item in statistics.most_engaged'>
+                                    <td><a v-bind:href="item.url">{{item.first_name + " " + " " + item.last_name}}</a>
+                                    </td>
+                                    <td>{{item.missed_votes}}</td>
+                                    <td>{{item.missed_votes_pct}}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="table-responsive">
+                            <h3>Most Engaged (Top 10% Attendance)</h3>
+                            <table class="table table-hover table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Number of Missed Votes</th>
+                                        <th>% Missed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for='item in statistics.least_engaged'>
+                                        <td><a
+                                                v-bind:href="item.url">{{item.first_name + " " + " " + item.last_name}}</a>
+                                        </td>
+                                        <td>{{item.missed_votes}}</td>
+                                        <td>{{item.missed_votes_pct}}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="container">
+                <div class="row mt-2">
+                    <p class="card card-body text-center bg-dark text-white">© 2019 TGIF | All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!--Para añadir el bootstrap y el vue-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script>
+    var url = 'https://api.propublica.org/congress/v1/115/senate/members.json';
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+
+
+<!-- Llamado a scripts de JavaScript -->
+
+<!-- <script src="main2.js"></script> -->
+<script src="statistics.js"></script>
+
+<!--Para crear las tablas -->
+<!--<script>
+    createRowsTable(most, statistics.most_engaged, "missed_votes_pct", "missed_votes", false);
+    createRowsTable(least, statistics.least_engaged, "missed_votes_pct", "missed_votes", false);
+</script>-->
+
+</html>
